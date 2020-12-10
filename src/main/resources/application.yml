@@ -1,0 +1,71 @@
+server: 
+  prot: 8081
+person:
+  #lastName等价于last-name或者last_name也可以,-代表后面的字母大写,这个叫松散绑定,@ConfigurationProperties支持松散绑定,@Value不支持
+  lastName: hello
+  age: 18
+  boss: false
+  #2020-11-11这样的日期格式识别不了
+  birth: 2020/11/11
+  maps: {k1: v1, k2: v2}
+  lists: 
+    - lisi
+    - zhaoliu
+  dog:
+    name: 小狗
+    age: 12
+spring:
+  profiles:
+    #激活dev环境,也可以使用命令行方式激活,--spring.profiles.active=dev
+    #java -jar spring-boot.jar --spring.profiles.active=dev这个是命令行参数
+    #VM options:java虚拟机参数: java -Dspring.profiles.active=test -jar springboot-profiles-1.0-SNAPSHOT.jar
+    active: dev
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://192.168.15.22:3306/jdbc
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    #下面的配置都是Druid的数据源配置
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    #配置监控统计拦截的filters,去掉后监控界面sql无法统计,wall用于防火墙
+    filters: stat,wall,log4j
+    maxPoolPreparedStatementPerConnectionSize: 20
+    useGlobalDataSourceStat: true
+    connectionProperties: durid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+    #DDL语句,项目启动的时候SpringBoot会自己帮忙我们执行这些DDL语句,执行完记得把这个配置删掉,要不然下次再启动就会把表删掉重新创建
+    schema:
+     - classpath: sql/deparment.sql
+     - classpath: sql/employee.sql
+    jpa:
+#SpringBoot整合JPA默认是使用hibernate来实现的
+      hibernate:
+      #更新或者创建数据表结构
+      ddl-auto: update
+      #控制台显示SQL
+      show-sql: true
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-location: classpath:mybatis/mapper/*.xml
+
+---
+server:
+  port: 8089
+debug: true
+spring:
+  profiles: dev
+---
+server:
+  port: 8088
+spring:
+  profiles: prod

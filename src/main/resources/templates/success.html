@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<!-- 导入thymeleaf的命名空间,主要为了语法提示 -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Thymeleaf模板引擎</title>
+</head>
+<body>
+	<h1>Thymeleaf模板引擎自动查询页面</h1>
+	<!-- th:text 将div里面的文本内容设置为传过来的值 ,th:任意html属性,来替换原生属性的值-->
+	<div id="div01" class="myDiv" th:id="${hello}" th:class="${hello}" th:text="${hello}">这里是div本身的信息,如果这个页面经过thymeleaf模板引擎打开,那么显示的内容以模板引擎设置的位置,
+	包括div的id 和class样式,如果此页面不经过thymeleaf模板引擎打开,那么这里面的th这些语法不影响页面按照普通的html正常显示的</div>
+	<hr/>
+	<div th:text="${hello}">th:text转义h1标签</div>
+	<div th:utext="${hello}">th:utext不转义h1标志</div>
+	<hr/>
+	<!-- th:each每次遍历都会生成当前这个标签,3个h4 -->
+	<h4 th:text="${user}" th:each="user: ${users}"></h4>
+	<hr/>
+	
+	<h4><!-- [[${user}]] 这种语法叫行内标签 -->
+		<span th:each="user: ${users}">[[${user}]]</span>
+	</h4>
+</body>
+</html>

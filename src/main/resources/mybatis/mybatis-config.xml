@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+  	<settings>
+  		<!-- 这里的配置文件跟MyBatisConfig类里面的配置可以混合使用,启动驼峰命名法,当表字段跟bean的字段不一致时可以开启 -->
+  		<setting name="mapUnderscoreToCamelCase" value="true"/>
+  	</settings>
+</configuration>
