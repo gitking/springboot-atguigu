@@ -5,6 +5,11 @@ import org.springframework.boot.SpringApplicationRunListener;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
 
+/**
+ * SpringApplicationRunListener这个接口一共有7个default方法,分别应SpringBoot启动的7个阶段,这个7个方法你都可以重写
+ * 这个类必须配置到src/main/resources/META-INF/spring.factories文件里面才会生效
+ * @author issuser
+ */
 public class HelloSpringApplicationRunListener implements SpringApplicationRunListener{
 	
 	public HelloSpringApplicationRunListener(SpringApplication application, String[] args) {
@@ -30,5 +35,13 @@ public class HelloSpringApplicationRunListener implements SpringApplicationRunLi
 	@Override
 	public void contextLoaded(ConfigurableApplicationContext context) {
 		System.out.println("IOC容器加载完成了..." + context);
+	}
+	
+	@Override
+	public void failed(ConfigurableApplicationContext context, Throwable exception) {
+		System.out.println("SpringBoot IOC容器加载失败了,发生异常了...");
+		if (exception != null) {
+			exception.printStackTrace();
+		}
 	}
 }

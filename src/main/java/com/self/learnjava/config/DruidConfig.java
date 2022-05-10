@@ -5,7 +5,7 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.assertj.core.util.Arrays;
+//import org.assertj.core.util.Arrays;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -46,7 +46,7 @@ public class DruidConfig {
 		Map<String, String> map = new HashMap<>();
 		map.put("exclusions", "*.js, *.css, /druid/*");
 		bean.setInitParameters(map);
-		bean.setUrlPatterns(Arrays.asList("/*"));
+		//bean.setUrlPatterns(Arrays.asList("/*"));
 		return bean;
 	}
 	

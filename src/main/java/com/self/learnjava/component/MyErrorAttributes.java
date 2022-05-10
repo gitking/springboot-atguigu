@@ -10,7 +10,7 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.WebRequest;
 
 /*
- * 将我们自己定制的错误数据返回出去
+ * 将我们自己定制的错误数据返回出去,自定义异常/定制异常
  */
 @Component
 public class MyErrorAttributes extends DefaultErrorAttributes{

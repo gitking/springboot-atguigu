@@ -1,6 +1,6 @@
 package com.self.learnjava.listener;
 
-import org.assertj.core.util.Arrays;
+//import org.assertj.core.util.Arrays;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -9,6 +9,6 @@ import org.springframework.stereotype.Component;
 public class HelloCommandLineRunner implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println("CommandLineRunner...run..." + Arrays.asList(args));
+	//	System.out.println("CommandLineRunner...run..." + Arrays.asList(args));
 	}
 }

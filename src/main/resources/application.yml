@@ -19,6 +19,8 @@ spring:
     #激活dev环境,也可以使用命令行方式激活,--spring.profiles.active=dev
     #java -jar spring-boot.jar --spring.profiles.active=dev这个是命令行参数
     #VM options:java虚拟机参数: java -Dspring.profiles.active=test -jar springboot-profiles-1.0-SNAPSHOT.jar
+    #在新版本中spring.profiles: test更换成了spring.config.activate.on-profile: test
+    #https://www.liaoxuefeng.com/wiki/1252599548343744/1282388483112993?t=1642386045785
     active: dev
   datasource:
     username: root

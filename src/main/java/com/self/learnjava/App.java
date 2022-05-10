@@ -51,7 +51,35 @@ public class App
 	static Logger logger = LoggerFactory.getLogger(App.class);
     public static void main( String[] args )
     {
-    	logger.info("日志打印");
-    	SpringApplication.run(App.class, args);
+    	try {
+    		/**
+    		 * https://www.heapdump.cn/article/2067679《无异常日志，就不能排查问题了？？？》
+    		 * 套路二
+    		 * 我们知道idea里面有很多好用的功能，比如肥朝之前的【看源码，我为什么推荐IDEA?】中就提到了条件断点，除此之外，还有一个被大家低估的功能，叫做异常断点。
+    		 * 案例二
+    		 * 我们先在看之前肥朝粉丝群的提，虑到部分粉丝不在群里，我就简单描述一下这个粉丝的问题，他代码有个异常，然后catch打异常日志，但是日志却没输出。
+    		 * 当然你还是不理解也没关系，我根据该粉丝的问题，给你搭建了一个最简模型的demo，模型虽然简单，但是问题是同样的，原汁原味，熟悉的配方，熟悉的味道。
+    		 * git地址（https://gitee.com/HelloToby/springboot-run-exception），我们运行起来看一下。
+    		 * 你会发现，一运行起来进程就停止，一点日志都没。绝大部分假粉丝遇到这个情况，都是菊花一紧，一点头绪都没，又去群里问”你们有没有遇到过，Springboot一起来进程就没了，但是没有日志的问题？“。正确提问姿势肥朝已经强调过，这里不多说。那么我们用前面学到的排查套路，再来走一波
+    		 * 我们从代码中看出两个关键单词【reportFailure】、【context.close()】，经过断点我们发现，确实是会先打印日志，再关掉容器。但是为啥日志先执行，再关掉容器，日志没输出，容器就关掉了呢？因为，这个demo中，日志是全异步日志，异步日志还没执行，容器就关了，导致了日志没有输出。
+    		 * 该粉丝遇到的问题是类似的，他是单元测试中，代码中的异步日志还没输出，单元测试执行完进程就停止了。知道了原理解决起来也很简单，比如最简单的，跑单元测试的时候末尾先sleep一下等日志输出。
+    		 * 在使用Springboot中，其实经常会遇到这种，启动期间出现异常，但是日志是异步的，日志还没输出就容器停止，导致没有异常日志。知道了原理之后，要彻底解决这类问题，可以增加一个SpringApplicationRunListener。
+    		 * 再啰嗦一句，其实日志输出不了，除了这个异步日志的案例外，还有很多情况的，比如日志冲突之类的，排查套路还很多，因此，建议持续关注，每一个套路，都想和你分享！
+    		 */
+    		logger.info("日志打印");
+        	SpringApplication.run(App.class, args);
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	} catch (Error e) {
+    		e.printStackTrace();
+    	} catch (Throwable e) {
+    		e.printStackTrace();
+    		//写到Spring文档里面去，我记得微信之前看过一篇文章，说SpringBoot的日志是异步打印的,报错之后来不及打印JVM就退出了，所以看不到报错日志信息，晚上微信上面找一下。
+    	}
+    	try {
+			Thread.sleep(100000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
     }
 }

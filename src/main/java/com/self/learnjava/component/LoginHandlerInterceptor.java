@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 /*
- * 登录检查
+ * 登录检查,SpringBoot拦截器
  */
 public class LoginHandlerInterceptor implements HandlerInterceptor {
 	
